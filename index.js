@@ -1,4 +1,5 @@
 // Part 1
+
 // const adventurer = {
 //   name: "Robin",
 //   health: 10,
@@ -31,8 +32,22 @@ class Character {
   }
 }
 
-const robin = new Character("Robin")
-robin.inventory = ["sword", "potion", "artifact"]
+
+// Part 3
+class Adventurer extends Character {
+  constructor(name, role) {
+    super(name)
+    this.role = role
+    this.inventory.push("bedroll", "50 gold coins")
+  }
+  scout() {
+    console.log(`${this.name} is scouting ahead`)
+    super.roll()
+  }
+}
+
+const robin = new Adventurer("Robin", "Journeyman")
+robin.inventory.push("sword", "potion", "artifact")
 robin.compainion = new Character("Leo")
 robin.compainion.type = "Cat"
 robin.compainion.compainion = new Character("Frank")
