@@ -1,23 +1,43 @@
 // Part 1
-const adventurer = {
-  name: "Robin",
-  health: 10,
-  inventory: ["sword", "potion", "artifact"],
-  companion: {
-    name: "Leo",
-    type: "Cat",
-    companion: {
-      name: "Frank",
-      type: "Flea",
-      inventory: ["small hat", "sunglasses"]
-    }
-  },
+// const adventurer = {
+//   name: "Robin",
+//   health: 10,
+//   inventory: ["sword", "potion", "artifact"],
+//   companion: {
+//     name: "Leo",
+//     type: "Cat",
+//     companion: {
+//       name: "Frank",
+//       type: "Flea",
+//       inventory: ["small hat", "sunglasses"]
+//     }
+//   },
+//   roll (mod = 0) {
+//     const result = Math.floor(Math.random() * 20) + 1 + mod;
+//     console.log(`${this.name} rolled a ${result}.`)
+//   }
+// }
+
+// Part 2
+class Character {
+  constructor(name) {
+    this.name = name
+    this.health = 100
+    this.inventory = []
+  }
   roll (mod = 0) {
     const result = Math.floor(Math.random() * 20) + 1 + mod;
     console.log(`${this.name} rolled a ${result}.`)
   }
 }
 
-for(i = 0; i < 20; i++) {
-  adventurer.roll(0)
-}
+const robin = new Character("Robin")
+robin.inventory = ["sword", "potion", "artifact"]
+robin.compainion = new Character("Leo")
+robin.compainion.type = "Cat"
+robin.compainion.compainion = new Character("Frank")
+robin.compainion.compainion.type = "Flea"
+robin.compainion.compainion.inventory = ["small hat", "sunglasses"]
+console.log(robin)
+console.log(robin.compainion)
+robin.roll(0)
