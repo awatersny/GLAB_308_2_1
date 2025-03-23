@@ -35,7 +35,7 @@ class Character {
 }
 
 
-// Part 3
+// Part 3 & 4
 class Adventurer extends Character {
   static ROLES = ["Fighter", "Healer", "Wizard", "Barbarian", "Monk"]
 
@@ -57,7 +57,28 @@ class Compainion extends Character {
   }
 }
 
-const robin = new Adventurer("Robin", "Fighter")
+// Part 5
+class AdventurerFactory {  
+  constructor (role) {
+    this.role = role;
+    this.adventurers = [];
+  }
+  generate (name) {
+    const newAdventurer = new Adventurer(name, this.role);
+    this.adventurers.push(newAdventurer);
+  }
+  findByIndex (index) {
+    return this.adventurers[index];
+  }
+  findByName (name) {
+    return this.adventurers.find((a) => a.name === name);
+  }
+}
+
+const healers = new AdventurerFactory("Fighter");
+healers.generate("Robin");
+console.log(healers.adventurers)
+const robin = healers.findByIndex(0)
 robin.inventory.push("sword", "potion", "artifact")
 robin.compainion = new Compainion("Leo", "Cat")
 robin.compainion.compainion = new Compainion("Frank", "Flea")
