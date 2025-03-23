@@ -46,12 +46,17 @@ class Adventurer extends Character {
   }
 }
 
+class Compainion extends Character {
+  constructor(name, type) {
+    super(name)
+    this.type = type
+  }
+}
+
 const robin = new Adventurer("Robin", "Journeyman")
 robin.inventory.push("sword", "potion", "artifact")
-robin.compainion = new Character("Leo")
-robin.compainion.type = "Cat"
-robin.compainion.compainion = new Character("Frank")
-robin.compainion.compainion.type = "Flea"
+robin.compainion = new Compainion("Leo", "Cat")
+robin.compainion.compainion = new Compainion("Frank", "Flea")
 robin.compainion.compainion.inventory = ["small hat", "sunglasses"]
 console.log(robin)
 console.log(robin.compainion)
