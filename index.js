@@ -51,8 +51,9 @@ class Adventurer extends Character {
   }
   // Part 6
   duel(opponent) {
+    const turnDuration = 1000
     // Repeat this process until one of the two adventurers reaches 50 health.
-    while(this.health > 50 && opponent.health > 50){
+    const turnDisplay = setInterval(() => {
       // Log the results of this “round” of the duel, including the rolls and current health values.
       const myRoll = this.roll(0)
       const opponentRoll = opponent.roll(0)
@@ -65,11 +66,18 @@ class Adventurer extends Character {
         // Subtract 1 from the adventurer with the lower roll.
         console.log(`${this.name} took damage!`)
         this.health--
+      } else {
+        console.log(`There was a stalemate.`)
       }
+      console.log(`${robin.name}'s health: ${robin.health}`)
+      console.log(`${bartre.name}'s health: ${bartre.health}`)
       console.log()
-    }
-    // Log the winner of the duel: the adventurer still above 50 health.
-    console.log(`${this.health > opponent.health ? this.name : opponent.name} wins the duel!`)
+      if(this.health <= 50 || opponent.health <= 50) {
+        // Log the winner of the duel: the adventurer still above 50 health.
+        console.log(`${this.health > opponent.health ? this.name : opponent.name} wins the duel!`)
+        clearInterval(turnDisplay)
+      }
+    }, turnDuration);
   }
 }
 
@@ -117,3 +125,5 @@ console.log(bartre, "\n")
 bartre.inventory.push("axe", "bow", "potion")
 
 robin.duel(bartre)
+
+let ctr = 0
