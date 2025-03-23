@@ -21,6 +21,8 @@
 
 // Part 2
 class Character {
+  static MAX_HEALTH = 100
+
   constructor(name) {
     this.name = name
     this.health = 100
@@ -35,9 +37,11 @@ class Character {
 
 // Part 3
 class Adventurer extends Character {
+  static ROLES = ["Fighter", "Healer", "Wizard", "Barbarian", "Monk"]
+
   constructor(name, role) {
     super(name)
-    this.role = role
+    this.role = Adventurer.ROLES.find(elt => elt === role) ? role : "Fighter"
     this.inventory.push("bedroll", "50 gold coins")
   }
   scout() {
@@ -53,7 +57,7 @@ class Compainion extends Character {
   }
 }
 
-const robin = new Adventurer("Robin", "Journeyman")
+const robin = new Adventurer("Robin", "Fighter")
 robin.inventory.push("sword", "potion", "artifact")
 robin.compainion = new Compainion("Leo", "Cat")
 robin.compainion.compainion = new Compainion("Frank", "Flea")
