@@ -75,8 +75,8 @@ class AdventurerFactory {
   }
 }
 
-const healers = new AdventurerFactory("Fighter");
-healers.generate("Robin");
+const fighters = new AdventurerFactory("Fighter");
+fighters.generate("Robin");
 console.log(healers.adventurers)
 const robin = healers.findByIndex(0)
 robin.inventory.push("sword", "potion", "artifact")
