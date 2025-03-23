@@ -31,6 +31,7 @@ class Character {
   roll (mod = 0) {
     const result = Math.floor(Math.random() * 20) + 1 + mod;
     console.log(`${this.name} rolled a ${result}.`)
+    return result
   }
 }
 
@@ -47,6 +48,28 @@ class Adventurer extends Character {
   scout() {
     console.log(`${this.name} is scouting ahead`)
     super.roll()
+  }
+  // Part 6
+  duel(opponent) {
+    // Repeat this process until one of the two adventurers reaches 50 health.
+    while(this.health > 50 && opponent.health > 50){
+      // Log the results of this “round” of the duel, including the rolls and current health values.
+      const myRoll = this.roll(0)
+      const opponentRoll = opponent.roll(0)
+      // Use the roll() functionality to create opposing rolls for each adventurer.
+      if(myRoll > opponentRoll) {
+        // Subtract 1 from the adventurer with the lower roll.
+        console.log(`${opponent.name} took damage!`)
+        opponent.health--
+      } else if(myRoll < opponentRoll) {
+        // Subtract 1 from the adventurer with the lower roll.
+        console.log(`${this.name} took damage!`)
+        this.health--
+      }
+      console.log()
+    }
+    // Log the winner of the duel: the adventurer still above 50 health.
+    console.log(`${this.health > opponent.health ? this.name : opponent.name} wins the duel!`)
   }
 }
 
@@ -75,14 +98,22 @@ class AdventurerFactory {
   }
 }
 
-const fighters = new AdventurerFactory("Fighter");
-fighters.generate("Robin");
-console.log(healers.adventurers)
-const robin = healers.findByIndex(0)
+const fighters = new AdventurerFactory("Fighter")
+const barbarians = new AdventurerFactory("Barbarian")
+fighters.generate("Robin")
+barbarians.generate("Bartre")
+
+const robin = fighters.findByIndex(0)
+const bartre = barbarians.findByName("Bartre")
+
 robin.inventory.push("sword", "potion", "artifact")
 robin.compainion = new Compainion("Leo", "Cat")
 robin.compainion.compainion = new Compainion("Frank", "Flea")
 robin.compainion.compainion.inventory = ["small hat", "sunglasses"]
-console.log(robin)
-console.log(robin.compainion)
-robin.roll(0)
+console.log(robin, "\n")
+console.log(robin.compainion, "\n")
+console.log(bartre, "\n")
+
+bartre.inventory.push("axe", "bow", "potion")
+
+robin.duel(bartre)
