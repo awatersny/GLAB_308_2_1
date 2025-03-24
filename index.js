@@ -20,6 +20,27 @@
 // }
 
 // Part 2
+class Item {
+  constructor(type, uses) {
+    this.type = type
+    this.uses = uses
+  }
+  useItem(quantity = 1) {
+    if(this.uses - quantity >= 0) {
+      this.uses -= quantity
+    }
+  }
+}
+
+class Weapon extends Item {
+  static ROLES = ["sword", "axe", "lance", "bow", "anima", "light", "dark"]
+
+  constructor(role, uses) {
+    super("weapon", uses)
+    this.role = Weapon.ROLES.find(elt => elt === role) ? role : "sword"
+  }
+}
+
 class Character {
   static MAX_HEALTH = 100
 
@@ -43,7 +64,7 @@ class Adventurer extends Character {
   constructor(name, role) {
     super(name)
     this.role = Adventurer.ROLES.find(elt => elt === role) ? role : "Fighter"
-    this.inventory.push("bedroll", "50 gold coins")
+    this.inventory.push(new Item("bedroll", 100), new Item("gold coins", 50))
   }
   scout() {
     console.log(`${this.name} is scouting ahead`)
@@ -55,8 +76,8 @@ class Adventurer extends Character {
     // Repeat this process until one of the two adventurers reaches 50 health.
     const turnDisplay = setInterval(() => {
       // Log the results of this “round” of the duel, including the rolls and current health values.
-      const myRoll = this.roll(0)
-      const opponentRoll = opponent.roll(0)
+      const myRoll = this.roll()
+      const opponentRoll = opponent.roll()
       // Use the roll() functionality to create opposing rolls for each adventurer.
       if(myRoll > opponentRoll) {
         // Subtract 1 from the adventurer with the lower roll.
@@ -114,10 +135,17 @@ barbarians.generate("Bartre")
 const robin = fighters.findByIndex(0)
 const bartre = barbarians.findByName("Bartre")
 
-robin.inventory.push("sword", "potion", "artifact")
+robin.inventory.push(
+  new Weapon("sword", 100),
+  new Item("potion", 50),
+  new Item("artifact", 1)
+)
 robin.compainion = new Compainion("Leo", "Cat")
 robin.compainion.compainion = new Compainion("Frank", "Flea")
-robin.compainion.compainion.inventory = ["small hat", "sunglasses"]
+robin.compainion.compainion.inventory.push(
+  new Item("new hat", 1),
+  new Item("sunglasses", 1)
+)
 console.log(robin, "\n")
 console.log(robin.compainion, "\n")
 console.log(bartre, "\n")
